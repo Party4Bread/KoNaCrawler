@@ -10,8 +10,9 @@ class KnCT1Crawler(kcc.KNCRModule):
         return {
             "name":"언론사 일반 템플릿 1",
             "scope":[
-                "weekly.chosun.com",
-                "news.unn.net"
+                "weekly.chosun.com", "news.unn.net",
+                "www.incheonin.com", "www.fsnews.co.kr",
+                ""
             ]
         }
     
@@ -20,14 +21,14 @@ class KnCT1Crawler(kcc.KNCRModule):
         async with aiohttp.ClientSession(headers=headers) as session:
             async with session.get(url) as resp:
                 html = await resp.text()
-        sele=parsel.Selector(html)
-        text_p = sele.css('#article-view-content-div>p')
+        sele = parsel.Selector(html)
+        text_p = sele.css('#article-view-content-div > p')
         text="\n".join(["".join(i.xpath(".//text()").extract()) for i in text_p])
         return text
 
 if __name__ == "__main__":
     import asyncio
-    url="http://weekly.chosun.com/news/articleView.html?idxno=25448"
+    url="http://www.fsnews.co.kr/news/articleView.html?idxno=48199"
     cl=KnCT1Crawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
