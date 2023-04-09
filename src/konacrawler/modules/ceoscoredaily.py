@@ -4,7 +4,7 @@ import parsel
 import aiohttp
 
 @kcc.register_module
-class WikitreeCrawler(kcc.KNCRModule):
+class CeoscoredailyCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
@@ -29,6 +29,6 @@ class WikitreeCrawler(kcc.KNCRModule):
 if __name__ == "__main__":
     import asyncio
     url="https://www.ceoscoredaily.com/page/view/2023022415000219500"
-    cl=WikitreeCrawler()
+    cl=CeoscoredailyCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))

@@ -4,7 +4,7 @@ import parsel
 import aiohttp
 
 @kcc.register_module
-class WikitreeCrawler(kcc.KNCRModule):
+class CcdnCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
@@ -29,6 +29,6 @@ class WikitreeCrawler(kcc.KNCRModule):
 if __name__ == "__main__":
     import asyncio
     url="https://www.ccdn.co.kr/news/articleView.html?idxno=472672"
-    cl=WikitreeCrawler()
+    cl=CcdnCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
