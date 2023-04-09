@@ -8,9 +8,9 @@ class WikitreeCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"신소재경제",
+            "name":"글로벌이코노믹",
             "scope":[
-                "amenews.kr"
+                "news.g-enews.com"
             ]
         }
     
@@ -22,13 +22,13 @@ class WikitreeCrawler(kcc.KNCRModule):
                 html = await resp.text()
 
         sele=parsel.Selector(html)
-        text_p = sele.css('#viewContent>p')
+        text_p = sele.css('body > div.vcon > div.vcon_in > div.v_lt > div > div.mi_lt > div.v1d > div.vtxt.detailCont')
         text="\n".join(["".join(i.xpath(".//text()").extract()) for i in text_p])
-        return text.replace('\n\n', '\n').replace('  ', ' ')
+        return text.replace('\n\n', '\n')
 
 if __name__ == "__main__":
     import asyncio
-    url="http://amenews.kr/news/view.php?idx=53165"
+    url="https://news.g-enews.com/ko-kr/news/article/news_all/201609161719155337728_1/article.html?md=20160919064009_U"
     cl=WikitreeCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
