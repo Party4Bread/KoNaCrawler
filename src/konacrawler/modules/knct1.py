@@ -21,9 +21,9 @@ class KnCT1Crawler(kcc.KNCRModule):
             async with session.get(url) as resp:
                 html = await resp.text()
         sele=parsel.Selector(html)
-        text_p = sele.css('#article-view-content-div>p::text')
-
-        return "\n".join(text_p.getall())
+        text_p = sele.css('#article-view-content-div>p')
+        text="\n".join(["".join(i.xpath(".//text()").extract()) for i in text_p])
+        return text
 
 if __name__ == "__main__":
     import asyncio
