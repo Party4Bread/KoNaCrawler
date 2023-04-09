@@ -4,13 +4,13 @@ import parsel
 import aiohttp
 
 @kcc.register_module
-class WeeklyDongaCrawler(kcc.KNCRModule):
+class EbnCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"주간 동아",
+            "name":"ebn 산업경제",
             "scope":[
-                "weekly.donga.com"
+                "www.ebn.co.kr"
             ]
         }
     
@@ -22,13 +22,13 @@ class WeeklyDongaCrawler(kcc.KNCRModule):
                 html = await resp.text()
 
         sele=parsel.Selector(html)
-        text_p = sele.css('#text')
+        text_p = sele.css('#newsContents > p')
         text="\n".join(["\n".join(i.xpath(".//text()").extract()) for i in text_p])
         return text.strip()
 
 if __name__ == "__main__":
     import asyncio
-    url="https://weekly.donga.com/3/all/11/4056976/1"
-    cl=WeeklyDongaCrawler()
+    url="https://www.ebn.co.kr/news/view/1573498/?sc=Naver"
+    cl=EbnCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
