@@ -10,12 +10,11 @@ class KnCT1Crawler(kcc.KNCRModule):
         return {
             "name":"언론사 일반 템플릿 1",
             "scope":[
-                "weekly.chosun.com",
-                "news.unn.net",
-                "www.dtnews24.com",
-                "weekly.chosun.com", "news.unn.net",
-                "www.incheonin.com", "www.fsnews.co.kr",
-                ""
+                "weekly.chosun.com","news.unn.net",
+                "www.dtnews24.com", "weekly.chosun.com",
+                "news.unn.net", "www.incheonin.com", 
+                "www.fsnews.co.kr", "www.ccdailynews.com",
+                
             ]
         }
     
