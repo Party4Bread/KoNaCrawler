@@ -12,6 +12,7 @@ class KnCT1Crawler(kcc.KNCRModule):
             "scope":[
                 "weekly.chosun.com",
                 "news.unn.net",
+                "www.dtnews24.com"
             ]
         }
     
