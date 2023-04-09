@@ -10,12 +10,30 @@ class KnCT1Crawler(kcc.KNCRModule):
         return {
             "name":"언론사 일반 템플릿 1",
             "scope":[
-                "weekly.chosun.com","news.unn.net",
-                "www.dtnews24.com", "weekly.chosun.com",
-                "news.unn.net", "www.incheonin.com", 
-                "www.fsnews.co.kr", "www.ccdailynews.com",
-                "www.ccdn.co.kr"
-
+                "www.pinpointnews.co.kr", "www.incheonin.com", "www.idaegu.co.kr", 
+                "www.seoulfn.com", "www.pennmike.com", "www.kdfnews.com", 
+                "www.thelec.kr", "www.100ssd.co.kr", "www.fsnews.co.kr", 
+                "www.kihoilbo.co.kr", "www.mediatoday.co.kr", "www.paxetv.com", 
+                "www.womennews.co.kr", "www.topstarnews.net", "www.ccnnews.co.kr", 
+                "www.hellodd.com", "www.daejonilbo.com", "www.m-i.kr", "www.jbnews.com", 
+                "www.shinailbo.co.kr", "www.dailypop.kr", "www.ksilbo.co.kr", 
+                "www.kyongbuk.co.kr", "www.newscj.com", "daily.hankooki.com", 
+                "www.polinews.co.kr", "news.lghellovision.net", "www.sportsq.co.kr", 
+                "www.e2news.com", "www.domin.co.kr", "www.cstimes.com", "www.ccdailynews.com", 
+                "www.sisajournal.com", "www.gndomin.com", "www.veritas-a.com", 
+                "www.ltn.kr", "www.jejusori.net", "weekly.chosun.com", 
+                "www.gnmaeil.com", "www.onews.tv", "www.womentimes.co.kr", 
+                "www.electimes.com", "www.labortoday.co.kr", "www.dkilbo.com", 
+                "www.idomin.com", "www.newsfreezone.co.kr", "www.newscape.co.kr", 
+                "www.catholicnews.co.kr", "www.dtnews24.com", "news.bbsi.co.kr", 
+                "www.ggilbo.com", "www.farminsight.net", "www.sisafocus.co.kr", 
+                "www.srtimes.kr", "www.energydaily.co.kr", "www.enewstoday.co.kr", 
+                "www.agrinet.co.kr", "www.ftoday.co.kr", "www.ntoday.co.kr", 
+                "www.gjdream.com", "www.newspost.kr", "www.thekpm.com", 
+                "news.unn.net", "www.goodkyung.com", "www.straightnews.co.kr", 
+                "www.gvalley.co.kr", "www.aflnews.co.kr", "www.cctoday.co.kr", 
+                "www.kado.net", "www.ilyoseoul.co.kr", "www.greened.kr", 
+                "www.cbci.co.kr", "www.ccdn.co.kr"
             ]
         }
     
@@ -31,7 +49,7 @@ class KnCT1Crawler(kcc.KNCRModule):
 
 if __name__ == "__main__":
     import asyncio
-    url="http://www.fsnews.co.kr/news/articleView.html?idxno=48199"
+    url="http://www.pennmike.com/news/articleView.html?idxno=61202"
     cl=KnCT1Crawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
