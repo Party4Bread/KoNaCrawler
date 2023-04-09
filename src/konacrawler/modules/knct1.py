@@ -14,7 +14,8 @@ class KnCT1Crawler(kcc.KNCRModule):
                 "www.dtnews24.com", "weekly.chosun.com",
                 "news.unn.net", "www.incheonin.com", 
                 "www.fsnews.co.kr", "www.ccdailynews.com",
-                
+                "www.ccdn.co.kr"
+
             ]
         }
     
