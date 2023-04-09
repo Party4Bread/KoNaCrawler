@@ -4,13 +4,13 @@ import parsel
 import aiohttp
 
 @kcc.register_module
-class News1Crawler(kcc.KNCRModule):
+class CcdnCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"news1뉴스",
+            "name":"조세금융신문",
             "scope":[
-                "www.news1.kr"
+                "www.ccdn.co.kr"
             ]
         }
     
@@ -22,13 +22,14 @@ class News1Crawler(kcc.KNCRModule):
                 html = await resp.text()
 
         sele=parsel.Selector(html)
-        text_p = sele.css('#articles_detail')
+        text_p = sele.css('#article-view-content-div > p')
         text="\n".join(["".join(i.xpath(".//text()").extract()) for i in text_p])
         return text.strip().replace('\n\n', '\n')
 
 if __name__ == "__main__":
     import asyncio
-    url="https://www.news1.kr/articles/5009148"
-    cl=News1Crawler()
+    url="https://www.ccdn.co.kr/news/articleView.html?idxno=472672"
+    cl=CcdnCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
+

@@ -4,7 +4,7 @@ import parsel
 import aiohttp
 
 @kcc.register_module
-class WikitreeCrawler(kcc.KNCRModule):
+class Viva100Crawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
@@ -29,6 +29,6 @@ class WikitreeCrawler(kcc.KNCRModule):
 if __name__ == "__main__":
     import asyncio
     url="https://www.viva100.com/main/view.php?key=20230205010001190"
-    cl=WikitreeCrawler()
+    cl=Viva100Crawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
