@@ -4,13 +4,14 @@ import parsel
 import aiohttp
 
 @kcc.register_module
-class WeeklyChosenCrawler(kcc.KNCRModule):
+class KnCT1Crawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"주간조선",
+            "name":"언론사 일반 템플릿 1",
             "scope":[
-                "weekly.chosun.com"
+                "weekly.chosun.com",
+                "news.unn.net"
             ]
         }
     
@@ -27,6 +28,6 @@ class WeeklyChosenCrawler(kcc.KNCRModule):
 if __name__ == "__main__":
     import asyncio
     url="http://weekly.chosun.com/news/articleView.html?idxno=25448"
-    cl=WeeklyChosenCrawler()
+    cl=KnCT1Crawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
