@@ -18,6 +18,7 @@ class KNCRModule(abc.ABC):
     @staticmethod
     def info()->ModuleInfo:
         ...
+        
     def crawl(self,url:str)->str:
         ...
 
