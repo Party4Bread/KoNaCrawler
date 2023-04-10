@@ -2,16 +2,15 @@ from typing import TypeVar, TypedDict
 import konacrawler.core as kcc
 import parsel
 import aiohttp
-import lxml
 
 @kcc.register_module
-class radioYTNCrawler(kcc.KNCRModule):
+class SiminilboCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"ytn라디오",
+            "name":"시민일보",
             "scope":[
-                "radio.ytn.co.kr"
+                "www.siminilbo.co.kr"
             ]
         }
     
@@ -21,19 +20,15 @@ class radioYTNCrawler(kcc.KNCRModule):
         async with aiohttp.ClientSession(headers=headers) as session:
             async with session.get(url) as resp:
                 html = await resp.text()
-                
-        doc=lxml.html.fromstring(html)
 
-        for bad in doc.cssselect('.content_area > h2, .content_area > script, .content_area > div, .content_area > thead'):
-            bad.getparent().remove(bad)
-        
-        ele=doc.cssselect(".content_area")[0]
-        text=ele.text_content()
+        sele=parsel.Selector(html)
+        text_p = sele.css('#viewConts > p')
+        text="\n".join(["\n".join(i.xpath(".//text()").extract()) for i in text_p])
         return text.strip()
 
 if __name__ == "__main__":
     import asyncio
-    url="https://radio.ytn.co.kr/program/?f=2&id=76191&s_mcd=0214&s_hcd=01"
-    cl=radioYTNCrawler()
+    url="https://www.siminilbo.co.kr/news/newsview.php?ncode=1160291005328776"
+    cl=SiminilboCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
