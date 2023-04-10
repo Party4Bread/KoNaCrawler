@@ -6,7 +6,7 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class AjuNewsCrawler(Knabs1Crawler):
+class DTCrawler(Knabs1Crawler):
     rm_sel='div:has(> img), iframe, center, .article_view>div'
     br_nl=False
     p_nl=False
@@ -24,6 +24,6 @@ class AjuNewsCrawler(Knabs1Crawler):
 if __name__ == "__main__":
     import asyncio
     url="http://www.dt.co.kr/contents.html?article_no=2023021602109919036008&ref=naver"
-    cl=AjuNewsCrawler()
+    cl=DTCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))

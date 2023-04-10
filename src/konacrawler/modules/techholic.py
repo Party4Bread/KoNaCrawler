@@ -6,7 +6,7 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class AjuNewsCrawler(Knabs1Crawler):
+class TechholicCrawler(Knabs1Crawler):
     rm_sel='table, p:nth-last-child(-n+4)'
     br_nl=False
     p_nl=False
@@ -24,6 +24,6 @@ class AjuNewsCrawler(Knabs1Crawler):
 if __name__ == "__main__":
     import asyncio
     url="http://www.techholic.co.kr/news/articleView.html?idxno=202414#rs"
-    cl=AjuNewsCrawler()
+    cl=TechholicCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
