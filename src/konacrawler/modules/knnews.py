@@ -2,15 +2,17 @@ from typing import TypeVar, TypedDict
 import konacrawler.core as kcc
 import parsel
 import aiohttp
+import lxml
+import re
 
 @kcc.register_module
-class CcdnCrawler(kcc.KNCRModule):
+class IdaeguCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"조세금융신문",
+            "name":"경남신문",
             "scope":[
-                "www.ccdn.co.kr"
+                "www.knnews.co.kr"
             ]
         }
     
@@ -21,15 +23,24 @@ class CcdnCrawler(kcc.KNCRModule):
             async with session.get(url) as resp:
                 html = await resp.text()
 
-        sele=parsel.Selector(html)
-        text_p = sele.css('#article-view-content-div > p')
-        text="\n".join(["".join(i.xpath(".//text()").extract()) for i in text_p])
-        return text.strip().replace('\n\n', '\n')
+        doc=lxml.html.fromstring(html)
+
+        for br in doc.xpath("*//br"):
+            br.tail = "\n" + br.tail if br.tail else "\n"
+
+        # for bad in doc.cssselect('#articleContent > div'):
+        #     bad.getparent().remove(bad)
+
+        ele=doc.cssselect("#content_li > p")
+        text='\n'.join(i.text_content() for i in ele).strip()
+        # text=ele.text_content().strip()
+        # text = re.sub(r'◀.+▶', '', text)
+
+        return text.strip()
 
 if __name__ == "__main__":
     import asyncio
-    url="https://www.ccdn.co.kr/news/articleView.html?idxno=472672"
-    cl=CcdnCrawler()
+    url="http://www.knnews.co.kr/news/articleView.php?idxno=1401116"
+    cl=IdaeguCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
-
