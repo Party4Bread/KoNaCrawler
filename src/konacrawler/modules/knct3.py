@@ -2,15 +2,17 @@ from typing import TypeVar, TypedDict
 import konacrawler.core as kcc
 import parsel
 import aiohttp
+import lxml
 
 @kcc.register_module
-class BetaCrawler(kcc.KNCRModule):
+class Knct3Crawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
             "name":"베타뉴스",
             "scope":[
-                "www.betanews.net"
+                "www.betanews.net",
+                "www.yonhapnewstv.co.kr"
             ]
         }
     
@@ -21,14 +23,26 @@ class BetaCrawler(kcc.KNCRModule):
             async with session.get(url) as resp:
                 html = await resp.text()
 
-        sele=parsel.Selector(html)
-        text_p = sele.css('#articleBody > p')
-        text="\n".join(["".join(i.xpath(".//text()").extract()) for i in text_p])
+
+        doc=lxml.html.fromstring(html)
+
+        for br in doc.xpath("*//br"):
+            br.tail = "\n" + br.tail if br.tail else "\n"
+
+        for bad in doc.cssselect('#articleBody>div, #articleBody>style, #articleBody>iframe,#articleBody>ul'):
+            bad.getparent().remove(bad)
+
+        ele=doc.cssselect("#articleBody")
+        text='\n'.join(i.text_content() for i in ele).strip()
+        # text=ele.text_content().strip()
+        # text = re.sub(r'◀.+▶', '', text)
+
         return text.strip()
 
 if __name__ == "__main__":
     import asyncio
     url="https://www.betanews.net/article/802364"
-    cl=BetaCrawler()
+    # url = 'https://www.yonhapnewstv.co.kr/news/MYH20230402011900641?input=1825m'
+    cl=Knct3Crawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
