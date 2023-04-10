@@ -33,7 +33,7 @@ class KnCT1Crawler(kcc.KNCRModule):
                 "news.unn.net", "www.goodkyung.com", "www.straightnews.co.kr", 
                 "www.gvalley.co.kr", "www.aflnews.co.kr", "www.cctoday.co.kr", 
                 "www.kado.net", "www.ilyoseoul.co.kr", "www.greened.kr", 
-                "www.cbci.co.kr", "www.ccdn.co.kr"
+                "www.cbci.co.kr", "www.ccdn.co.kr", "www.ccdn.co.kr"
             ]
         }
     
