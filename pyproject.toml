@@ -16,7 +16,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "parsel"
-    "aiohttp"
+    "parsel",
+    "aiohttp",
     "lxml"
 ]
