@@ -6,7 +6,7 @@ import lxml
 import re
 
 @kcc.register_module
-class IdaeguCrawler(kcc.KNCRModule):
+class KnnewsCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
@@ -41,6 +41,6 @@ class IdaeguCrawler(kcc.KNCRModule):
 if __name__ == "__main__":
     import asyncio
     url="http://www.knnews.co.kr/news/articleView.php?idxno=1401116"
-    cl=IdaeguCrawler()
+    cl=KnnewsCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))

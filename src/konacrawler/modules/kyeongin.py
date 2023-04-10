@@ -5,7 +5,7 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class Knct3Crawler(kcc.KNCRModule):
+class KyeonginCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
@@ -42,6 +42,6 @@ if __name__ == "__main__":
     import asyncio
     url="http://www.kyeongin.com/main/view.php?key=20180128010008405"
     # url = 'https://www.yonhapnewstv.co.kr/news/MYH20230402011900641?input=1825m'
-    cl=Knct3Crawler()
+    cl=KyeonginCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))

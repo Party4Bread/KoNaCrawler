@@ -5,7 +5,7 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class Knct3Crawler(kcc.KNCRModule):
+class KoreaCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
@@ -41,6 +41,6 @@ class Knct3Crawler(kcc.KNCRModule):
 if __name__ == "__main__":
     import asyncio
     url="https://www.korea.kr/news/actuallyView.do?newsId=148861424&call_from=naver_news"
-    cl=Knct3Crawler()
+    cl=KoreaCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
