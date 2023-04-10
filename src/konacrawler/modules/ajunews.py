@@ -1,11 +1,17 @@
 from typing import TypeVar, TypedDict
 import konacrawler.core as kcc
+from konacrawler.modules.knabs1 import Knabs1Crawler
 import parsel
 import aiohttp
 import lxml
 
 @kcc.register_module
-class AjuNewsCrawler(kcc.KNCRModule):
+class AjuNewsCrawler(Knabs1Crawler):
+    rm_sel='.imgBox, div[class^="dcamp_ad"], .relate_box, .article_bot, .article_bot ~ *, script'
+    br_nl=False
+    p_nl=False
+    cont_sel='#articleBody'
+
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
@@ -14,22 +20,6 @@ class AjuNewsCrawler(kcc.KNCRModule):
                 "www.ajunews.com"
             ]
         }
-    
-    async def crawl(self, url: str) -> str:
-        headers={"USER-AGENT":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"}
-        async with aiohttp.ClientSession(headers=headers) as session:
-            async with session.get(url) as resp:
-                html = await resp.text()
-                
-        doc=lxml.html.fromstring(html)
-
-        ele=doc.cssselect('#articleBody')[0]
-
-        for bad in ele.cssselect('.imgBox, div[class^="dcamp_ad"], .relate_box, .article_bot, .article_bot ~ *, script'):
-            bad.getparent().remove(bad)
-
-        text=ele.text_content()
-        return text.strip()
 
 if __name__ == "__main__":
     import asyncio
