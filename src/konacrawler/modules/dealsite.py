@@ -2,15 +2,16 @@ from typing import TypeVar, TypedDict
 import konacrawler.core as kcc
 import parsel
 import aiohttp
+import lxml
 
 @kcc.register_module
-class KookjeCrawler(kcc.KNCRModule):
+class InochongCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"국제신문",
+            "name":"dealsite",
             "scope":[
-                "www.kookje.co.kr"
+                "dealsite.co.kr"
             ]
         }
     
@@ -21,14 +22,18 @@ class KookjeCrawler(kcc.KNCRModule):
             async with session.get(url) as resp:
                 html = await resp.text()
 
-        sele=parsel.Selector(html)
-        text_p = sele.css('#news_textArea > div.news_article')
-        text="\n".join(["".join(i.xpath(".//text()").extract()) for i in text_p])
-        return text.strip().replace('\n\n', '\n')
+        doc=lxml.html.fromstring(html)
+
+        # for bad in doc.cssselect('#ct > p > span'):
+        #     bad.getparent().remove(bad)
+        
+        ele=doc.cssselect("div.rnmc-right.rnmc-right1.content-area > p")
+        text='\n'.join(i.text_content() for i in ele)
+        return text.strip()
 
 if __name__ == "__main__":
     import asyncio
-    url="http://www.kookje.co.kr/news2011/asp/newsbody.asp?code=1700&key=20230112.22019003127"
-    cl=KookjeCrawler()
+    url="https://dealsite.co.kr/articles/99870"
+    cl=InochongCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
