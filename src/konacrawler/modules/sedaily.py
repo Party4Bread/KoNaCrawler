@@ -22,12 +22,12 @@ class SeDailyCrawler(kcc.KNCRModule):
                 html = await resp.text()
                 
         doc=lxml.html.fromstring(html)
-        for bad in doc.cssselect('*[class^="sub_ad_banner"], .article_copy, .art_photo, script'):
-            bad.getparent().remove(bad)
-        for br in doc.xpath("*//br"):
-            br.tail = "\n" + br.tail if br.tail else "\n"
 
         ele=doc.cssselect('.article_view[itemprop="articleBody"]')[0]
+        for bad in ele.cssselect('*[class^="sub_ad_banner"], .article_copy, .art_photo, script'):
+            bad.getparent().remove(bad)
+        for br in ele.xpath("*//br"):
+            br.tail = "\n" + br.tail if br.tail else "\n"
         text=ele.text_content()
         return text.strip()
 
