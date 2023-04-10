@@ -1,17 +1,18 @@
 from typing import TypeVar, TypedDict
 import konacrawler.core as kcc
+from konacrawler.modules.knabs1 import Knabs1Crawler
 import parsel
 import aiohttp
+import lxml
 
 @kcc.register_module
-class TfmediaCrawler(kcc.KNCRModule):
+class SportsseoulCrawler(Knabs1Crawler):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"조세금융신문",
+            "name":"스포츠서울",
             "scope":[
-                "tfmedia.co.kr",
-                "www.tfmedia.co.kr",
+                "www.sportsseoul.com"
             ]
         }
     
@@ -23,13 +24,13 @@ class TfmediaCrawler(kcc.KNCRModule):
                 html = await resp.text()
 
         sele=parsel.Selector(html)
-        text_p = sele.css('#news_body_area > p')
-        text="\n".join(["".join(i.xpath(".//text()").extract()) for i in text_p])
-        return text.strip().replace('\n\n', '\n')
+        text_p = sele.css('#article-body>p')
+        text="\n".join(["\n".join(i.xpath(".//text()").extract()) for i in text_p])
+        return text.strip()
 
 if __name__ == "__main__":
     import asyncio
-    url="https://tfmedia.co.kr/news/article.html?no=31183"
-    cl=TfmediaCrawler()
+    url="https://www.sportsseoul.com/news/read/1302650?ref=naver"
+    cl=SportsseoulCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
