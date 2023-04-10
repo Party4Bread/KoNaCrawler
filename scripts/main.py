@@ -29,5 +29,7 @@ async def main():
     res=await asyncio.gather(*(asyncio.ensure_future(test(url))for url in it))
     print(Counter(res))
         
-
+import platform
+if platform.system()=='Windows':
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 asyncio.run(main())

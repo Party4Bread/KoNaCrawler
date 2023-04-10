@@ -5,13 +5,13 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class SeDailyCrawler(kcc.KNCRModule):
+class YnaCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"서울경제",
+            "name":"연합뉴스",
             "scope":[
-                "www.sedaily.com"
+                "www.yna.co.kr"
             ]
         }
     
@@ -23,17 +23,19 @@ class SeDailyCrawler(kcc.KNCRModule):
                 
         doc=lxml.html.fromstring(html)
 
-        ele=doc.cssselect('.article_view[itemprop="articleBody"]')[0]
-        for bad in ele.cssselect('*[class^="sub_ad_banner"], .article_copy, .art_photo, script'):
+        ele=doc.cssselect('.article')[0]
+
+        for bad in ele.cssselect('div[class^="writer-zone"], .photo-group, aside, .related-zone, .txt-copyright, .adrs'):
             bad.getparent().remove(bad)
-        for br in ele.xpath("*//br"):
+        for br in doc.xpath("*//br"):
             br.tail = "\n" + br.tail if br.tail else "\n"
+
         text=ele.text_content()
         return text.strip()
 
 if __name__ == "__main__":
     import asyncio
-    url="https://www.sedaily.com/NewsView/29O7594OXX"
-    cl=SeDailyCrawler()
+    url="https://www.yna.co.kr/view/AKR20230407055000073?input=1195m"
+    cl=YnaCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
