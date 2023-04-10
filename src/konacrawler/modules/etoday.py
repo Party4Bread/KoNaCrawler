@@ -9,9 +9,9 @@ class NewsminCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"뉴스민",
+            "name":"BizEnter",
             "scope":[
-                "www.newsmin.co.kr"
+                "enter.etoday.co.kr"
             ]
         }
     
@@ -27,13 +27,13 @@ class NewsminCrawler(kcc.KNCRModule):
         # for bad in doc.cssselect('#ct > p > span'):
         #     bad.getparent().remove(bad)
         
-        ele=doc.cssselect(".td-post-content > p")
+        ele=doc.cssselect("#articleBody > p")
         text='\n'.join(i.text_content() for i in ele)
         return text.strip()
 
 if __name__ == "__main__":
     import asyncio
-    url="https://www.newsmin.co.kr/news/86228/"
+    url="http://enter.etoday.co.kr/news/view/196357"
     cl=NewsminCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
