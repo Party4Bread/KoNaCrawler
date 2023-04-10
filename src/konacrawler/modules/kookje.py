@@ -4,13 +4,13 @@ import parsel
 import aiohttp
 
 @kcc.register_module
-class TfmediaCrawler(kcc.KNCRModule):
+class KookjeCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"조세금융신문",
+            "name":"국제신문",
             "scope":[
-                "tfmedia.co.kr"
+                "www.kookje.co.kr"
             ]
         }
     
@@ -22,13 +22,13 @@ class TfmediaCrawler(kcc.KNCRModule):
                 html = await resp.text()
 
         sele=parsel.Selector(html)
-        text_p = sele.css('#news_body_area > p')
+        text_p = sele.css('#news_textArea > div.news_article')
         text="\n".join(["".join(i.xpath(".//text()").extract()) for i in text_p])
         return text.strip().replace('\n\n', '\n')
 
 if __name__ == "__main__":
     import asyncio
-    url="https://tfmedia.co.kr/news/article.html?no=31183"
-    cl=TfmediaCrawler()
+    url="http://www.kookje.co.kr/news2011/asp/newsbody.asp?code=0300&key=20230409.99010002507"
+    cl=KookjeCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
