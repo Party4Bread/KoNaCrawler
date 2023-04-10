@@ -7,7 +7,7 @@ import lxml
 
 @kcc.register_module
 class AjuNewsCrawler(Knabs1Crawler):
-    rm_sel='.imgBox, div[class^="dcamp_ad"], .relate_box, .article_bot, .article_bot ~ *, script'
+    rm_sel='table, p:nth-last-child(-n+4)'
     br_nl=False
     p_nl=False
     cont_sel='#articleBody'
@@ -15,15 +15,15 @@ class AjuNewsCrawler(Knabs1Crawler):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"아주경제",
+            "name":"techholic",
             "scope":[
-                "www.ajunews.com"
+                "www.techholic.co.kr"
             ]
         }
 
 if __name__ == "__main__":
     import asyncio
-    url="https://www.ajunews.com/view/20210420133114713"
+    url="http://www.techholic.co.kr/news/articleView.html?idxno=202414#rs"
     cl=AjuNewsCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
