@@ -10,9 +10,10 @@ class ChmbcCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"춘천mbc",
+            "name":"mbc 템플릿",
             "scope":[
-                "chmbc.co.kr"
+                "chmbc.co.kr",
+                "dgmbc.com"
             ]
         }
     
@@ -32,11 +33,11 @@ class ChmbcCrawler(kcc.KNCRModule):
         text=ele.text_content().strip().replace('\n\n\n\n', '\n').replace('\n\n', '')
         text = re.sub(r'◀.+▶', '', text)
 
-        return text
+        return text.strip()
 
 if __name__ == "__main__":
     import asyncio
-    url="https://chmbc.co.kr/article/y2sLhEbjw1skxM3"
+    url="https://dgmbc.com/article/H9E9ucpdQfxXzbCtUfk9C7"
     cl=ChmbcCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
