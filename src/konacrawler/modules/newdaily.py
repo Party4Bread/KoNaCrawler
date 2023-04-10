@@ -6,24 +6,24 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class KpenewsCrawler(Knabs1Crawler):
-    rm_sel='.cont-area>div'
+class JoongdoCrawler(Knabs1Crawler):
+    rm_sel='#article_conent>iframe, script, #article_conent>div:has(>img)'
     br_nl=True
     p_nl=False
-    cont_sel='.cont-area'
+    cont_sel='#article_conent'
 
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"한국정경신문",
+            "name":"newdaily",
             "scope":[
-                "kpenews.com"
+                "www.newdaily.co.kr"
             ]
         }
 
 if __name__ == "__main__":
     import asyncio
-    url="http://kpenews.com/View.aspx?No=53810"
-    cl=KpenewsCrawler()
+    url="https://www.newdaily.co.kr/site/data/html/2023/02/16/2023021600223.html"
+    cl=JoongdoCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
