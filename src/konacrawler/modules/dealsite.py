@@ -5,7 +5,7 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class InochongCrawler(kcc.KNCRModule):
+class DealsiteCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
@@ -34,6 +34,6 @@ class InochongCrawler(kcc.KNCRModule):
 if __name__ == "__main__":
     import asyncio
     url="https://dealsite.co.kr/articles/99870"
-    cl=InochongCrawler()
+    cl=DealsiteCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))

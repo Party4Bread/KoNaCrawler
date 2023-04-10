@@ -6,7 +6,7 @@ import lxml
 import re
 
 @kcc.register_module
-class ChmbcCrawler(kcc.KNCRModule):
+class Knct2Crawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
@@ -38,6 +38,6 @@ class ChmbcCrawler(kcc.KNCRModule):
 if __name__ == "__main__":
     import asyncio
     url="https://dgmbc.com/article/H9E9ucpdQfxXzbCtUfk9C7"
-    cl=ChmbcCrawler()
+    cl=Knct2Crawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))

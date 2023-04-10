@@ -6,13 +6,13 @@ import lxml
 import re
 
 @kcc.register_module
-class InsightCrawler(kcc.KNCRModule):
+class TbsnewsCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"insight",
+            "name":"tbs 뉴스",
             "scope":[
-                "www.insight.co.kr"
+                "tbs.seoul.kr"
             ]
         }
     
@@ -25,21 +25,18 @@ class InsightCrawler(kcc.KNCRModule):
 
         doc=lxml.html.fromstring(html)
 
-        # for br in doc.xpath("*//br"):
-        #     br.tail = "\n" + br.tail if br.tail else "\n"
-        
-        for bad in doc.cssselect('.image'):
-            bad.getparent().remove(bad)
+        for br in doc.xpath("*//br"):
+            br.tail = "\n" + br.tail if br.tail else "\n"
 
-        ele=doc.cssselect("div.news-article-memo > p")
-        text='\n'.join(i.text_content() for i in ele)
+        ele=doc.cssselect("#sub-center > div.sub1-left-right.div-top35.clearfix > div.left > div.line-bm > ul:nth-child(2) > li")[0]
+        text=ele.text_content().strip()
         # text = re.sub(r'◀.+▶', '', text)
 
         return text.strip()
 
 if __name__ == "__main__":
     import asyncio
-    url="https://www.insight.co.kr/news/322855"
-    cl=InsightCrawler()
+    url="http://tbs.seoul.kr/news/bunya.do?method=daum_html2&typ_800=9&idx_800=3421065&seq_800=20413642"
+    cl=TbsnewsCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))

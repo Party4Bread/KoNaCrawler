@@ -5,7 +5,7 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class NewsminCrawler(kcc.KNCRModule):
+class EtodayCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
@@ -34,7 +34,7 @@ class NewsminCrawler(kcc.KNCRModule):
 if __name__ == "__main__":
     import asyncio
     url="http://enter.etoday.co.kr/news/view/196357"
-    cl=NewsminCrawler()
+    cl=EtodayCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
     
