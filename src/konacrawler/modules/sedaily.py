@@ -5,13 +5,13 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class HankookIlboCrawler(kcc.KNCRModule):
+class SeDailyCrawler(kcc.KNCRModule):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"한국일보",
+            "name":"서울경제",
             "scope":[
-                "www.hankookilbo.com"
+                "www.sedaily.com"
             ]
         }
     
@@ -22,18 +22,18 @@ class HankookIlboCrawler(kcc.KNCRModule):
                 html = await resp.text()
                 
         doc=lxml.html.fromstring(html)
-        for bad in doc.cssselect('.article_img[itemprop="articleBody"], .writer ~ *, .writer, .end-ad-container, .editor-img-box'):
+        for bad in doc.cssselect('*[class^="sub_ad_banner"], .article_copy, .art_photo, script'):
             bad.getparent().remove(bad)
         for br in doc.xpath("*//br"):
             br.tail = "\n" + br.tail if br.tail else "\n"
 
-        ele=doc.cssselect('.col-main[itemprop="articleBody"]')[0]
+        ele=doc.cssselect('.article_view[itemprop="articleBody"]')[0]
         text=ele.text_content()
         return text.strip()
 
 if __name__ == "__main__":
     import asyncio
-    url="https://www.hankookilbo.com/News/Read/A2023022706210001472?did=NA"
-    cl=HankookIlboCrawler()
+    url="https://www.sedaily.com/NewsView/29O7594OXX"
+    cl=SeDailyCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
