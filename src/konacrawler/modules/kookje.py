@@ -10,7 +10,7 @@ class KookjeCrawler(kcc.KNCRModule):
         return {
             "name":"국제신문",
             "scope":[
-                "www.kookje.co.kr"
+                "www.kookje.co.kr",
             ]
         }
     
