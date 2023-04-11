@@ -6,18 +6,18 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class Etoday2Crawler(Knabs1Crawler):
-    rm_sel='script, .articleView>div, section'
+class JoongangCrawler(Knabs1Crawler):
+    rm_sel='#article_body>div.ab_photo'
     br_nl=True
     p_nl=True
-    cont_sel='.articleView'
+    cont_sel='#article_body'
 
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"이투데이",
+            "name":"The JoongAng",
             "scope":[
-                "www.etoday.co.kr"
+                "www.joongang.co.kr"
             ]
         }
     
@@ -35,7 +35,7 @@ class Etoday2Crawler(Knabs1Crawler):
 
 if __name__ == "__main__":
     import asyncio
-    url='https://www.etoday.co.kr/news/view/2236571'
-    cl=Etoday2Crawler()
+    url='https://www.joongang.co.kr/article/25138214#home'
+    cl=JoongangCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
