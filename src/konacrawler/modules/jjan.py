@@ -6,7 +6,7 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class WowtvCrawler(Knabs1Crawler):
+class JjanCrawler(Knabs1Crawler):
     rm_sel='script, .article_txt_container>div:has(>div),.article_txt_container>div:has(>figure), .article_txt_container>figure, table, .arti_copy'
     br_nl=False
     p_nl=True
@@ -24,6 +24,6 @@ class WowtvCrawler(Knabs1Crawler):
 if __name__ == "__main__":
     import asyncio
     url="http://www.jjan.kr/2126501"
-    cl=WowtvCrawler()
+    cl=JjanCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
