@@ -23,7 +23,7 @@ class KookjeCrawler(kcc.KNCRModule):
 
         sele=parsel.Selector(html)
         text_p = sele.css('#news_textArea > div.news_article')
-        text="\n".join(["".join(i.xpath(".//text()").extract()) for i in text_p])
+        text="\n".join(["\n\n".join(i.xpath(".//text()").extract()) for i in text_p])
         return text.strip().replace('\n\n', '\n')
 
 if __name__ == "__main__":

@@ -6,18 +6,18 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class PnCrawler(Knabs1Crawler):
-    rm_sel='#articleBody>table'
-    br_nl=False
-    p_nl=False
-    cont_sel='#articleBody'
+class KwnewsCrawler(Knabs1Crawler):
+    rm_sel='#articlebody>div'
+    br_nl=True
+    p_nl=True
+    cont_sel='#articlebody'
 
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"평화뉴스",
+            "name":"강원일보",
             "scope":[
-                "www.pn.or.kr"
+                "www.kwnews.co.kr"
             ]
         }
     
@@ -42,7 +42,7 @@ class PnCrawler(Knabs1Crawler):
 
 if __name__ == "__main__":
     import asyncio
-    url='http://www.kookje.co.kr/news2011/asp/newsbody.asp?code=1700&key=20230112.22019003127'
-    cl=PnCrawler()
+    url='http://www.kwnews.co.kr/page/view/2023040516010724533'
+    cl=KwnewsCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
