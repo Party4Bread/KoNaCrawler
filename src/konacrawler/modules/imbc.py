@@ -6,18 +6,13 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class IfsCrawler(Knabs1Crawler):
-    # rm_sel='#bo_v_con>div'
-    # br_nl=True
-    # p_nl=True
-    # cont_sel='#bo_v_con'
-
+class ImbcCrawler(Knabs1Crawler):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"ifs",
+            "name":"imbc",
             "scope":[
-                "ifs.or.kr"
+                "imnews.imbc.com"
             ]
         }
     
@@ -28,19 +23,14 @@ class IfsCrawler(Knabs1Crawler):
             async with session.get(url) as resp:
                 html = await resp.text()
 
-        doc=lxml.html.fromstring(html)
-
-        # for bad in doc.cssselect(''):
-        #     bad.getparent().remove(bad)
-
-        ele=doc.cssselect("#bo_v_con")[0]
-        text=ele.text_content().strip().replace('.', '.\n')
-
+        sele=parsel.Selector(html)
+        text_p = sele.css('.news_txt')
+        text = ''.join(['\n'.join(text_p[0].xpath('.//text()')[:-7].extract())])
         return text.strip()
 
 if __name__ == "__main__":
     import asyncio
-    url="https://ifs.or.kr/bbs/board.php?bo_table=News&wr_id=3811"
-    cl=IfsCrawler()
+    url="https://imnews.imbc.com/replay/2023/nwdesk/article/6471171_36199.html"
+    cl=ImbcCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))

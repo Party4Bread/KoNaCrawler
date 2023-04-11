@@ -6,7 +6,7 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class CrawIfsler(Knabs1Crawler):
+class MediapenCrawler(Knabs1Crawler):
     rm_sel='#articleBody>a, #articleBody>div:has(>table)'
     br_nl=True
     p_nl=True
@@ -24,6 +24,6 @@ class CrawIfsler(Knabs1Crawler):
 if __name__ == "__main__":
     import asyncio
     url="http://www.mediapen.com/news/view/791226"
-    cl=CrawIfsler()
+    cl=MediapenCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
