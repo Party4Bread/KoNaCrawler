@@ -6,8 +6,8 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class EconomynewsCrawler(Knabs1Crawler):
-    rm_sel='#news_body_area>div, #news_body_area>script'
+class DdailyCrawler(Knabs1Crawler):
+    rm_sel='#news_body_area>img'
     br_nl=False
     p_nl=False
     cont_sel='#news_body_area'
@@ -15,9 +15,9 @@ class EconomynewsCrawler(Knabs1Crawler):
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"이코노미뉴스",
+            "name":"디지털데일리",
             "scope":[
-                "www.m-economynews.com"
+                "www.ddaily.co.kr"
             ]
         }
     
@@ -42,7 +42,7 @@ class EconomynewsCrawler(Knabs1Crawler):
 
 if __name__ == "__main__":
     import asyncio
-    url='http://www.m-economynews.com/news/article.html?no=36920'
-    cl=EconomynewsCrawler()
+    url='https://www.ddaily.co.kr/news/article/?no=258605'
+    cl=DdailyCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
