@@ -7,17 +7,17 @@ import lxml
 
 @kcc.register_module
 class MbnCrawler(Knabs1Crawler):
-    rm_sel='#newsViewArea>div, #newsViewArea>table'
+    rm_sel='.article_content>div'
     br_nl=False
-    p_nl=False
-    cont_sel='#newsViewArea'
+    p_nl=True
+    cont_sel='.article_content'
 
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"mbn뉴스",
+            "name":"부산일보",
             "scope":[
-                "www.mbn.co.kr"
+                "www.busan.com"
             ]
         }
     
@@ -42,7 +42,7 @@ class MbnCrawler(Knabs1Crawler):
 
 if __name__ == "__main__":
     import asyncio
-    url='https://www.mbn.co.kr/news/politics/4915907'
+    url='https://www.busan.com/view/busan/view.php?code=2020020218564553198'
     cl=MbnCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))

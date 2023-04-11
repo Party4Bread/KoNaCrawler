@@ -6,7 +6,7 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class SbsCrawler(Knabs1Crawler):
+class BiznewdailyCrawler(Knabs1Crawler):
     rm_sel='.smartOutput>div:nth-child(2)>div:has(>img), .smartOutput>div:nth-child(2)>script'
     br_nl=True
     p_nl=True
@@ -36,6 +36,6 @@ class SbsCrawler(Knabs1Crawler):
 if __name__ == "__main__":
     import asyncio
     url='https://biz.newdaily.co.kr/site/data/html/2023/03/30/2023033000036.html'
-    cl=SbsCrawler()
+    cl=BiznewdailyCrawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
