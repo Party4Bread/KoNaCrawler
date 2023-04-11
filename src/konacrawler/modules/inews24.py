@@ -6,18 +6,18 @@ import aiohttp
 import lxml
 
 @kcc.register_module
-class KsmnewsCrawler(Knabs1Crawler):
-    rm_sel=''
-    br_nl=False
+class Inews24Crawler(Knabs1Crawler):
+    rm_sel='#articleBody>figure, #articleBody>ad, #articleBody>hr, #articleBody>container, #articleBody>div'
+    br_nl=True
     p_nl=True
-    cont_sel='#fontSzArea > p:nth-child(4)'
+    cont_sel='#articleBody'
 
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"경상매일신문",
+            "name":"아이뉴스24",
             "scope":[
-                "www.ksmnews.co.kr"
+                "www.inews24.com"
             ]
         }
     
@@ -42,7 +42,7 @@ class KsmnewsCrawler(Knabs1Crawler):
 
 if __name__ == "__main__":
     import asyncio
-    url='http://www.ksmnews.co.kr/default/index_view_page.php?idx=420202&part_idx=7'
-    cl=KsmnewsCrawler()
+    url='https://www.inews24.com/view/1579666'
+    cl=Inews24Crawler()
     
     print(asyncio.get_event_loop().run_until_complete(cl.crawl(url)))
