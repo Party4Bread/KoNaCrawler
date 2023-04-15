@@ -1,9 +1,5 @@
-from typing import TypeVar, TypedDict
 import konacrawler.core as kcc
 from konacrawler.modules.knabs1 import Knabs1Crawler
-import parsel
-import aiohttp
-import lxml
 
 @kcc.register_module
 class AjuNewsCrawler(Knabs1Crawler):

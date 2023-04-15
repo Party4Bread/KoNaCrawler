@@ -11,7 +11,8 @@ class NewsisCrawler(kcc.KNCRModule):
         return {
             "name":"뉴시스",
             "scope":[
-                "www.newsis.com"
+                "www.newsis.com",
+                "newsis.com"
             ]
         }
     
