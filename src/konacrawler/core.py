@@ -5,6 +5,7 @@ from collections import defaultdict
 import importlib
 from pathlib import Path
 import logging
+from itertools import chain
 
 __all__ = ['ModuleInfo','KNCRModule','register_module']
 
@@ -68,15 +69,20 @@ class Registry:
 registry=Registry()
 register_module=registry.register_module
 
-def import_modules():
+def import_modules(custom_module=None):
     modules_path = Path(__file__).parent/'modules'
     if not modules_path.exists() or not modules_path.is_dir():
         raise ImportError("No modules folder")
     sys.path.insert(0, str(modules_path.absolute()))
-
+    it=modules_path.glob("*")
+    if custom_module:
+        custom_module=Path(custom_module)
+        it=chain(it,custom_module.glob("*"))
+        sys.path.insert(0, str(custom_module.absolute()))
+    
     # ensure that user modules are only imported once
     import_modules.memo = getattr(import_modules, "memo", set())
-    for module_pth in modules_path.glob("*"):
+    for module_pth in it:
         if not module_pth.is_dir() and module_pth.suffix != ".zip" and module_pth.suffix != ".py":
             logging.warn(f"Skip {module_pth} to load")
             continue
