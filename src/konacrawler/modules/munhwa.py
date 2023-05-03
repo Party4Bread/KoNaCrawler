@@ -1,29 +1,26 @@
 from typing import TypeVar, TypedDict
 import konacrawler.core as kcc
 from konacrawler.modules.knabs1 import Knabs1Crawler
-import parsel
-import aiohttp
-import lxml
 
 @kcc.register_module
 class EdailyCrawler(Knabs1Crawler):
-    rm_sel='.news_body>table, script'
-    br_nl=True
+    rm_sel='#News_content>p'
+    br_nl=False
     p_nl=False
-    cont_sel='.news_body'
+    cont_sel='#News_content'
 
     @staticmethod
     def info()->kcc.ModuleInfo:
         return {
-            "name":"이데일리",
+            "name":"문화일보",
             "scope":[
-                "www.edaily.co.kr",
+                "www.munhwa.com",
             ]
         }
 
 if __name__ == "__main__":
     import asyncio
-    url = 'https://www.edaily.co.kr/news/read?newsId=02584646635573168&mediaCodeNo=257&OutLnkChk=Y'
+    url = 'https://www.munhwa.com/news/view.html?no=2023033001071227270001'
     
     
     cl=EdailyCrawler()
