@@ -30,6 +30,7 @@ class DebatingdayCrawler(kcc.KNCRModule):
         #     bad.getparent().remove(bad)
         # for br in doc.xpath("*//br"):
         #     br.tail = "\n" + br.tail if br.tail else "\n"
+        
         res = {
             'title': '',
             'discussion': '',
@@ -54,10 +55,13 @@ class DebatingdayCrawler(kcc.KNCRModule):
         
         for op in ele.cssselect('div.message'):
             opin = {
+                'side': '',
                 'text': '',
                 'thumbs-up': '',
                 'thumbs-down': '',
             }
+            for s in op.cssselect('.label'):
+                opin['side'] = s.text_content()
 
             for o in op.cssselect('p'):
                 opin['text'] += o.text_content()
@@ -67,15 +71,15 @@ class DebatingdayCrawler(kcc.KNCRModule):
             for down in op.cssselect('.dss'):
                 opin['thumbs-down'] += down.text_content()
 
+            if opin['side'] == '':
+                opin['side'] = '중립'
+
             res['opinions'].append(opin)
         
         return json.dumps(res)
 
 if __name__ == "__main__":
     import asyncio
-
-
-
     url="https://debatingday.com/22426/%ed%96%a5%ed%9b%84-%ec%9e%90%ec%9c%a8-%ec%a3%bc%ed%96%89%ec%9d%b4-%eb%b3%b4%ea%b8%89%eb%90%a0-%ea%b2%bd%ec%9a%b0-%ec%9a%b4%ec%a0%84%eb%a9%b4%ed%97%88%eb%8a%94-%ed%95%84%ec%88%98%ec%9d%b8%ea%b0%80/"
     cl=DebatingdayCrawler()
     
